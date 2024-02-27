@@ -617,6 +617,29 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"folder": {
+					"name": "nyc_taxi/ldw"
+				},
+				"content": {
+					"query": "USE nyc_taxi_ldw;\n\nCREATE EXTERNAL TABLE silver.taxi_zone\n    WITH\n    (\n        DATA_SOURCE = nyx_tax_src\n        LOCATION = 'silver/tax_zone'\n        FILE_FORMAT = parquet_file_format\n    )\nAS\nSELECT *\n    FROM bronze.taxi_zone;",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "nyc_taxi_ldw",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/set_serverless_cost_control')]",
 			"type": "Microsoft.Synapse/workspaces/sqlscripts",
 			"apiVersion": "2019-06-01-preview",
