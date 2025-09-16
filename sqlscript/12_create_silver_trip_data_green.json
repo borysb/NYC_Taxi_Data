@@ -5,7 +5,7 @@
 			"name": "nyc_taxi/ldw"
 		},
 		"content": {
-			"query": "USE nyc_taxi_ldw;\n\nIF OBJECT_ID('silver.trip_data_green') IS NOT NULL\n    DROP EXTERNAL TABLE silver.trip_data_green\nGO\n\n--CETAS statement\nCREATE EXTERNAL TABLE silver.trip_data_green\n    WITH\n    (\n        DATA_SOURCE = nyc_taxi_src,\n        LOCATION = 'silver/trip_data_green',\n        FILE_FORMAT = parquet_file_format\n    )\nAS\nSelect *\nFrom bronze.trip_data_green_csv;\n\nselect * from silver.trip_data_green;\n\nCREATE EXTERNAL TABLE silver.trip_data_green_2020_01\n    WITH\n    (\n        DATA_SOURCE = nyc_taxi_src,\n        LOCATION = 'silver/trip_data_green/year=2020/month=01',\n        FILE_FORMAT = parquet_file_format\n    )\nAS\nSELECT *\n    FROM bronze.vw_trip_data_green_csv\n    WHERE year = '2020'\n    AND month = '01';",
+			"query": "USE nyc_taxi_ldw;\n\nIF OBJECT_ID('silver.trip_data_green') IS NOT NULL\n    DROP EXTERNAL TABLE silver.trip_data_green\nGO\n\n--CETAS statement\nCREATE EXTERNAL TABLE silver.trip_data_green\n    WITH\n    (\n        DATA_SOURCE = nyc_taxi_src,\n        LOCATION = 'silver/trip_data_green',\n        FILE_FORMAT = parquet_file_format\n    )\nAS\nSELECT *\n    FROM bronze.trip_data_green_csv;\n\n\nSELECT *\n    FROM silver.trip_data_green;\n\nCREATE EXTERNAL TABLE silver.trip_data_green_2020_01\n    WITH\n    (\n        DATA_SOURCE = nyc_taxi_src,\n        LOCATION = 'silver/trip_data_green/year=2020/month=01',\n        FILE_FORMAT = parquet_file_format\n    )\nAS\nSELECT *\n    FROM bronze.vw_trip_data_green_csv\n    WHERE year = '2020'\n    AND month = '01';",
 			"metadata": {
 				"language": "sql"
 			},
